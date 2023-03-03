@@ -1,10 +1,10 @@
-import {blogsCollection, postsCollection} from "../db/db";
+import {blogsCollection, postsCollection} from "../../db/db";
 import {ObjectId} from 'mongodb'
-import {UpdateBlogModel} from "../models/blogs/UpdateBlogModel";
-import {BlogType, BlogTypeForDb} from "../models/blogs/BlogType";
-import {arrToBlogBLLModel} from "../mappers/blogs-mappers/arrToBlogBLLModel";
-import {Blog} from "../models/blogs/Blog";
-import {objToBlogBLLModel} from "../mappers/blogs-mappers/objToBlogBLLModel";
+import {UpdateBlogModel} from "../../models/blogs/UpdateBlogModel";
+import {BlogType, BlogTypeForDb} from "../../models/blogs/BlogType";
+import {arrToBlogBLLModel} from "../../mappers/blogs-mappers/arrToBlogBLLModel";
+import {Blog} from "../../models/blogs/Blog";
+import {objToBlogBLLModel} from "../../mappers/blogs-mappers/objToBlogBLLModel";
 
 
 

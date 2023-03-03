@@ -15,11 +15,11 @@ import {authorizationMiddleware} from "../middlewares/authorization-middleware";
 import {idValidatorMiddleware} from "../middlewares/validators/id-validator-middleware";
 import {ViewBlogModel} from "../models/blogs/ViewBlogModel";
 import {blogsService} from "../domain/blog-service";
-import {blogQueryRepository} from "../repositories/blog-query-repository";
+import {blogQueryRepository} from "../repositories/blogs/blog-query-repository";
 import {postForBlogValidationMiddleware} from "../middlewares/validators/post-for-blog-vaidation-middleware";
 import {CreatePostModel} from "../models/posts/CreatePostModel";
 import {postService} from "../domain/post-service";
-import {postsQueryRepository} from "../repositories/posts-query-repository";
+import {postsQueryRepository} from "../repositories/posts/posts-query-repository";
 import {BlogInputQueryType} from "../models/blogs/query/BlogInputQueryType";
 import {ViewBlogModelWithPagination} from "../models/blogs/ViewBlogModelWithPagination";
 

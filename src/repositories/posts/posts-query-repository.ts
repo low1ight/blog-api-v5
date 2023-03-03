@@ -1,12 +1,12 @@
-import {blogsCollection, postsCollection} from "../db/db";
+import {blogsCollection, postsCollection} from "../../db/db";
 import {ObjectId} from "mongodb";
-import {ViewPostModel} from "../models/posts/ViewPostModel";
-import {arrToPostViewModel} from "../mappers/posts-mappers/arrToPostViewModel";
-import {PostType} from "../models/posts/PostType";
-import {objToPostViewModel} from "../mappers/posts-mappers/objToPostViewModel";
-import {getPaginatedAndSortedResults} from "./common-functions/getPaginatedAndSortedResults";
-import {ViewPostModelWithPagination} from "../models/posts/ViewPostModelWithPagination";
-import {PostQueryType} from "../models/posts/query/PostQueryType";
+import {ViewPostModel} from "../../models/posts/ViewPostModel";
+import {arrToPostViewModel} from "../../mappers/posts-mappers/arrToPostViewModel";
+import {PostType} from "../../models/posts/PostType";
+import {objToPostViewModel} from "../../mappers/posts-mappers/objToPostViewModel";
+import {getPaginatedAndSortedResults} from "../common-functions/getPaginatedAndSortedResults";
+import {ViewPostModelWithPagination} from "../../models/posts/ViewPostModelWithPagination";
+import {PostQueryType} from "../../models/posts/query/PostQueryType";
 
 
 export const postsQueryRepository = {

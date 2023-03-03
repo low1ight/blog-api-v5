@@ -1,12 +1,12 @@
-import {UpdatePostModel} from "../models/posts/UpdatePostModel";
-import {postsCollection} from "../db/db";
+import {UpdatePostModel} from "../../models/posts/UpdatePostModel";
+import {postsCollection} from "../../db/db";
 import {ObjectId} from "mongodb";
-import {PostType, PostTypeForDb} from "../models/posts/PostType";
-import {arrToPostBLLModel} from "../mappers/posts-mappers/arrToPostBLLModel";
-import {objToPostBLLModel} from "../mappers/posts-mappers/objToPostBLLModel";
-import {Post} from "../models/posts/Post";
-import {Blog} from "../models/blogs/Blog";
-import {blogRepository} from "./blogs-repository";
+import {PostType, PostTypeForDb} from "../../models/posts/PostType";
+import {arrToPostBLLModel} from "../../mappers/posts-mappers/arrToPostBLLModel";
+import {objToPostBLLModel} from "../../mappers/posts-mappers/objToPostBLLModel";
+import {Post} from "../../models/posts/Post";
+import {Blog} from "../../models/blogs/Blog";
+import {blogRepository} from "../blogs/blogs-repository";
 
 export const postsRepository = {
 

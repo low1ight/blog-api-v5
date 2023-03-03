@@ -1,6 +1,7 @@
-import {blogRepository} from "../repositories/blogs-repository";
+import {blogRepository} from "../repositories/blogs/blogs-repository";
 import {CreateBlogModel} from "../models/blogs/CreateBlogModel";
 import {UpdateBlogModel} from "../models/blogs/UpdateBlogModel";
+import {getDate} from "../utils/getDate";
 
 
 
@@ -14,7 +15,7 @@ export const blogsService = {
             name,
             description,
             websiteUrl,
-            createdAt:new Date().toISOString(),
+            createdAt:getDate(),
             isMembership:false
         }
 

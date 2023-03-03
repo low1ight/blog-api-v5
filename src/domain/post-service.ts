@@ -1,10 +1,11 @@
 import {PostTypeForDb} from "../models/posts/PostType";
 import {ObjectId} from "mongodb";
 import {CreatePostModel} from "../models/posts/CreatePostModel";
-import {postsRepository} from "../repositories/posts-repository";
+import {postsRepository} from "../repositories/posts/posts-repository";
 import {Blog} from "../models/blogs/Blog";
-import {blogRepository} from "../repositories/blogs-repository";
+import {blogRepository} from "../repositories/blogs/blogs-repository";
 import {UpdatePostModel} from "../models/posts/UpdatePostModel";
+import {getDate} from "../utils/getDate";
 
 
 
@@ -22,7 +23,7 @@ export const postService = {
             content,
             blogId: new ObjectId(blogId),
             blogName:blog.name,
-            createdAt:new Date().toISOString()
+            createdAt:getDate()
         }
 
         return await postsRepository.createPost(newPost)

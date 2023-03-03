@@ -8,7 +8,7 @@ import {inputValidationMiddleware} from "../middlewares/validators/input-validat
 import {authorizationMiddleware} from "../middlewares/authorization-middleware";
 import {idValidatorMiddleware} from "../middlewares/validators/id-validator-middleware";
 import {ViewPostModel} from "../models/posts/ViewPostModel";
-import {postsQueryRepository} from "../repositories/posts-query-repository";
+import {postsQueryRepository} from "../repositories/posts/posts-query-repository";
 import {postService} from "../domain/post-service";
 import {ViewPostModelWithPagination} from "../models/posts/ViewPostModelWithPagination";
 import {getPostQuery} from "./common-functions/getPostQuery";
