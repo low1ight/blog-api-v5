@@ -7,6 +7,7 @@ const usersFields:string[] = ["login","password","email"];
 const [login,password,email] = usersFields
 
 
+
 export const usersValidationMiddleware = [
 
     body(usersFields)
@@ -27,7 +28,6 @@ export const usersValidationMiddleware = [
 
 
     body(email)
-        .matches('^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$\n').withMessage(fieldErrorMessages.incorrectFieldFormat('email')),
+        .matches("^\\w+([\\.-]?\\w+)*@\\w+([\\.-]?\\w+)*(\\.\\w{2,3})+$").withMessage(fieldErrorMessages.incorrectFieldFormat('email')),
 
 ]
-
