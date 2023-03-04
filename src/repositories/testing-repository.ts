@@ -1,4 +1,4 @@
-import {blogsCollection, postsCollection} from "../db/db";
+import {blogsCollection, postsCollection, usersCollection} from "../db/db";
 
 
 
@@ -8,7 +8,8 @@ export const testingRepository = {
 
         const allBlogsRemoveResult = await blogsCollection.deleteMany({})
         const allPostsRemoveResult = await postsCollection.deleteMany({})
+        const allUsersRemoveResult = await usersCollection.deleteMany({})
 
-        return allBlogsRemoveResult.acknowledged && allPostsRemoveResult.acknowledged;
+        return allBlogsRemoveResult.acknowledged && allPostsRemoveResult.acknowledged && allUsersRemoveResult.acknowledged;
     }
 }
