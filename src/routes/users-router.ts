@@ -31,8 +31,7 @@ usersRouter.post('/', authorizationMiddleware, usersValidationMiddleware, inputV
 
     if (!createdUser) return res.sendStatus(404)
 
-    return res.json(createdUser)
-
+    return res.status(201).json(createdUser)
 
 })
 

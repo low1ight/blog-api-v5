@@ -15,8 +15,8 @@ authRouter.post('/login',authLoginValidatorMiddleware,inputValidationMiddleware,
 
     const isLoginSuccessful:boolean = await userService.checkCredentials(req.body.loginOrEmail,req.body.password)
 
-    if(!isLoginSuccessful) return res.status(400).json("Wrong password or login")
+    if(!isLoginSuccessful) return res.status(401).json("Wrong password or login")
 
-     return res.sendStatus(200)
+     return res.sendStatus(204)
 
 })
