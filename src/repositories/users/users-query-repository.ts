@@ -12,11 +12,13 @@ export const usersQueryRepository = {
         return await getPaginatedAndSortedResults(query,usersCollection,arrToUserViewModel,{})
     },
 
+
     async getUserById(id:string) {
         const foundUser: UserType | null = await usersCollection.findOne({_id:new ObjectId(id)})
         if(!foundUser) return false
         return objToUserViewModel(foundUser)
     },
+
 
     async findUserByEmailOrLogin(emailOrLogin:string) {
         return await usersCollection.findOne({ $or: [ {email:emailOrLogin}, {login:emailOrLogin} ] })

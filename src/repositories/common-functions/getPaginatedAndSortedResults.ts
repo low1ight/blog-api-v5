@@ -14,7 +14,7 @@ export const getPaginatedAndSortedResults = async ({pageNumber, pageSize, sortBy
 
     const sortObj = createSortObj(sortBy,sortDirection)
 
-    const totalElemCount = await collection.countDocuments()
+    const totalElemCount = await collection.countDocuments(searchingObj)
 
     const result = await collection
         .find(searchingObj)
