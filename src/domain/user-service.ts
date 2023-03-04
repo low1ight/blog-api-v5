@@ -32,7 +32,7 @@ export const userService = {
 
     },
 
-    async checkCredentials(EmailOrLogin:string,password:string) {
+    async checkCredentials(EmailOrLogin:string,password:string):Promise<boolean> {
 
          const foundUser:null | UserType = await usersQueryRepository.findUserByEmailOrLogin(EmailOrLogin)
 

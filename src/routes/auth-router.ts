@@ -13,7 +13,7 @@ export const authRouter = Router({})
 
 authRouter.post('/login',authLoginValidatorMiddleware,inputValidationMiddleware,async (req:RequestWithParams<LoginInputModel>,res:Response) => {
 
-    const isLoginSuccessful = await userService.checkCredentials(req.body.loginOrEmail,req.body.password)
+    const isLoginSuccessful:boolean = await userService.checkCredentials(req.body.loginOrEmail,req.body.password)
 
     if(!isLoginSuccessful) return res.status(400).json("Wrong password or login")
 
