@@ -13,7 +13,7 @@ export const createSearchingObj = (searchParams:ParamsObjType, additionalParams:
 
 
     //search by several fields
-    if(fieldsForSearch.length > 1) return {$and:[...fieldsForSearch],...additionalParams}
+    if(fieldsForSearch.length > 1) return {$or:[...fieldsForSearch],...additionalParams}
 
 
 
