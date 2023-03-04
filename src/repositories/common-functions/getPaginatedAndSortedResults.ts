@@ -4,13 +4,13 @@ import {createSearchingObj} from "./createSearchingObj";
 import {calculateSkipElemCount} from "./calculateSkipElemCount";
 import {createSortObj} from "./createSortObj";
 
-export const getPaginatedAndSortedResults = async ({pageNumber, pageSize, sortBy ,sortDirection, searchNameTerm}:QueryType ,
+export const getPaginatedAndSortedResults = async ({pageNumber, pageSize, sortBy ,sortDirection, ...searchingParams}:QueryType ,
                                                    collection:Collection<any> , arrToViewModel:Function, additionalSearchParams:object):Promise<ViewModelWithPagination> => {
 
 
     const skipElemCount = calculateSkipElemCount(pageNumber,pageSize)
 
-    const searchingObj = createSearchingObj(searchNameTerm,additionalSearchParams)
+    const searchingObj = createSearchingObj(searchingParams,additionalSearchParams)
 
     const sortObj = createSortObj(sortBy,sortDirection)
 
