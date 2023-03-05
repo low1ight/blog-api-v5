@@ -2,6 +2,7 @@ import {MongoClient} from "mongodb";
 import {BlogTypeForDb} from "../models/blogs/BlogType";
 import {PostTypeForDb} from "../models/posts/PostType";
 import {UserTypeForDb} from "../models/users/UserType";
+import {CommentTypeForDb} from "../models/comments/CommentType";
 
 let mongoUrl = 'mongodb+srv://qlowlight:uNrmiq0xtAknlUjI@cluster0.xahjpqu.mongodb.net/?retryWrites=true&w=majority';
 
@@ -15,7 +16,7 @@ const db = client.db('blog')
 export const blogsCollection = db.collection<BlogTypeForDb>("blogs")
 export const postsCollection = db.collection<PostTypeForDb>("posts")
 export const usersCollection = db.collection<UserTypeForDb>("users")
-export const commentsCollection = db.collection
+export const commentsCollection = db.collection<CommentTypeForDb>('comments')
 
 
 
