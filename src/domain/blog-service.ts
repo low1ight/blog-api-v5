@@ -1,25 +1,15 @@
 import {blogRepository} from "../repositories/blogs/blogs-repository";
 import {CreateBlogModel} from "../models/blogs/CreateBlogModel";
 import {UpdateBlogModel} from "../models/blogs/UpdateBlogModel";
-import {getDate} from "../utils/getDate";
-
 
 
 
 export const blogsService = {
 
 
-    async createBlog({name,description,websiteUrl}:CreateBlogModel):Promise<string | null> {
+    async createBlog(newBlogData:CreateBlogModel):Promise<string | null> {
 
-        let newBlog = {
-            name,
-            description,
-            websiteUrl,
-            createdAt:getDate(),
-            isMembership:false
-        }
-
-        return await blogRepository.createBlog(newBlog)
+        return await blogRepository.createBlog(newBlogData)
 
     },
 

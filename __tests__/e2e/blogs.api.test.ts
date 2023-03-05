@@ -2,14 +2,11 @@ import request from "supertest";
 import {app} from "../../src";
 
 
-
-
 describe('/blogs',  () => {
 
 
 let testingBlogId:string
 let testingPostId:string
-
 
     it('remove all data from db', async () => {
         await request(app).delete('/api/testing/all-data')

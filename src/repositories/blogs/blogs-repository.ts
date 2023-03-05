@@ -1,10 +1,12 @@
 import {blogsCollection, postsCollection} from "../../db/db";
 import {ObjectId} from 'mongodb'
 import {UpdateBlogModel} from "../../models/blogs/UpdateBlogModel";
-import {BlogType, BlogTypeForDb} from "../../models/blogs/BlogType";
+import {BlogType} from "../../models/blogs/BlogType";
 import {arrToBlogBLLModel} from "../../mappers/blogs-mappers/arrToBlogBLLModel";
 import {Blog} from "../../models/blogs/Blog";
 import {objToBlogBLLModel} from "../../mappers/blogs-mappers/objToBlogBLLModel";
+import {getDate} from "../../utils/getDate";
+import {CreateBlogModel} from "../../models/blogs/CreateBlogModel";
 
 
 
@@ -31,9 +33,18 @@ export const blogRepository = {
     },
 
 
-    async createBlog(blog: BlogTypeForDb): Promise<string | null> {
+    async createBlog({name,description,websiteUrl}: CreateBlogModel): Promise<string | null> {
 
-        const result = await blogsCollection.insertOne(blog)
+
+        let newBlog = {
+            name,
+            description,
+            websiteUrl,
+            createdAt:getDate(),
+            isMembership:false
+        }
+
+        const result = await blogsCollection.insertOne(newBlog)
 
         if (!result.insertedId) return null
 

@@ -7,6 +7,8 @@ import {objToPostBLLModel} from "../../mappers/posts-mappers/objToPostBLLModel";
 import {Post} from "../../models/posts/Post";
 import {Blog} from "../../models/blogs/Blog";
 import {blogRepository} from "../blogs/blogs-repository";
+import {CreatePostModel} from "../../models/posts/CreatePostModel";
+import {getDate} from "../../utils/getDate";
 
 export const postsRepository = {
 
@@ -28,10 +30,20 @@ export const postsRepository = {
 
 
 
-    async createPost(postData: PostTypeForDb):Promise<string | null> {
+    async createPost({title,shortDescription,content,blogId}: CreatePostModel,blogName:string):Promise<string | null> {
 
 
-        let result = await postsCollection.insertOne(postData)
+        const newPost:PostTypeForDb = {
+            title,
+            shortDescription,
+            content,
+            blogId: new ObjectId(blogId),
+            blogName:blogName,
+            createdAt:getDate()
+        }
+
+
+        let result = await postsCollection.insertOne(newPost)
 
         if (!result.insertedId) return null
 

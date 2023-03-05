@@ -10,7 +10,9 @@ import {authRouter} from "./routes/auth-router";
 
 
 export const app = express()
+
 const port = process.env.PORT || 3000
+
 
 app.use(express.json())
 
@@ -29,6 +31,7 @@ app.get('/', (req, res) => {
     res.send('Hello World!')
 })
 
+
 const startApp = async () => {
 
     await runDB()
@@ -36,7 +39,6 @@ const startApp = async () => {
     app.listen(port, () => {
         console.log(`Example app listening on port ${port}`)
     })
-
 }
 startApp()
 

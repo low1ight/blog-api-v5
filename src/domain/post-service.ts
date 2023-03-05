@@ -1,32 +1,21 @@
-import {PostTypeForDb} from "../models/posts/PostType";
-import {ObjectId} from "mongodb";
 import {CreatePostModel} from "../models/posts/CreatePostModel";
 import {postsRepository} from "../repositories/posts/posts-repository";
 import {Blog} from "../models/blogs/Blog";
 import {blogRepository} from "../repositories/blogs/blogs-repository";
 import {UpdatePostModel} from "../models/posts/UpdatePostModel";
-import {getDate} from "../utils/getDate";
+
 
 
 
 export const postService = {
 
-    async createPost({title,shortDescription,content,blogId}: CreatePostModel):Promise<string | null> {
+    async createPost(newPostData: CreatePostModel):Promise<string | null> {
 
-        const blog: Blog | null = await blogRepository.getBlogById(blogId)
+        const blog: Blog | null = await blogRepository.getBlogById(newPostData.blogId)
 
         if(!blog) return null
 
-        const newPost:PostTypeForDb = {
-            title,
-            shortDescription,
-            content,
-            blogId: new ObjectId(blogId),
-            blogName:blog.name,
-            createdAt:getDate()
-        }
-
-        return await postsRepository.createPost(newPost)
+        return await postsRepository.createPost(newPostData,blog.name)
 
     },
 

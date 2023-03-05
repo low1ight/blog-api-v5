@@ -17,6 +17,8 @@ export const blogQueryRepository = {
 
     async getBlogs(query:BlogQueryType): Promise<ViewBlogModelWithPagination> {
 
+
+
         return await getPaginatedAndSortedResults(query,blogsCollection,arrToBlogViewModel,{})
 
     },
