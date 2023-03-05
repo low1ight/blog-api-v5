@@ -1,5 +1,11 @@
 import {Router,Response} from "express";
-import {RequestWithBody, RequestWithParams, RequestWithParamsAndBody, RequestWithQuery} from "../request-types";
+import {
+    RequestWithBody,
+    RequestWithParams,
+    RequestWithParamsAndBody,
+    RequestWithParamsAndQuery,
+    RequestWithQuery
+} from "../request-types";
 import {UriIdParamsModel} from "../models/UriIdParamsModel";
 import {CreatePostModel} from "../models/posts/CreatePostModel";
 import {UpdatePostModel} from "../models/posts/UpdatePostModel";
@@ -14,6 +20,12 @@ import {ViewPostModelWithPagination} from "../models/posts/ViewPostModelWithPagi
 import {getPostQuery} from "./common-functions/getPostQuery";
 import {PostQueryType} from "../models/posts/query/PostQueryType";
 import {PostInputQueryType} from "../models/posts/query/PostInputQueryType";
+import {PostIdUriParamsModel} from "../models/posts/PostIdUriParamsModel";
+import {ViewCommentModelWithPagination} from "../models/comments/ViewCommentModelWithPagination";
+import {CommentInputQueryType} from "../models/comments/query/CommentInputQueryType";
+import {CommentQueryType} from "../models/comments/query/CommentQueryType";
+import {getCommentQuery} from "./common-functions/getCommentQuery";
+import {commentsQueryRepository} from "../repositories/comments-query-repository";
 
 
 
@@ -74,4 +86,16 @@ postsRouter.delete('/:id',authorizationMiddleware,idValidatorMiddleware,inputVal
 
    return res.sendStatus(204)
 
+})
+
+
+postsRouter.get('/:postId/comments', async (req:RequestWithParamsAndQuery<PostIdUriParamsModel,CommentInputQueryType>,res:Response) => {
+
+    const query:CommentQueryType = getCommentQuery(req.query)
+
+    const comments:ViewCommentModelWithPagination | null = await commentsQueryRepository.getPostsComments(query,req.params.postId)
+
+    if(!comments) return res.sendStatus(404)
+
+    return res.json(comments)
 })

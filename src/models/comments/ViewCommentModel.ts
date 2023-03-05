@@ -1,6 +1,6 @@
 
 export type ViewCommentModel = {
-    _id?: string
+    id: string
     content:string
     commentatorInfo:CommentatorInfoViewModel
     createdAt:string
