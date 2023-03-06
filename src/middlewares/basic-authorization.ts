@@ -1,7 +1,7 @@
 import {NextFunction, Request, Response} from "express";
 
 
-export const authorizationMiddleware = (req:Request,res:Response, next:NextFunction) => {
+export const basicAuthorization = (req:Request, res:Response, next:NextFunction) => {
 
     const encodedData = Buffer.from("admin:qwerty").toString('base64')
     const correctLoginData = `Basic ${encodedData}`
