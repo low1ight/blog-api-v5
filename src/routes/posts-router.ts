@@ -111,5 +111,5 @@ postsRouter.post('/:postId/comments',bearerAuthorization,commentValidator,idVali
 
     if(!comments) return res.sendStatus(404)
 
-    return res.json(comments)
+    return res.status(201).json(comments)
 })

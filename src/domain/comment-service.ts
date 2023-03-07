@@ -6,6 +6,7 @@ import {ViewUserModel} from "../models/users/ViewUserModel";
 import {usersQueryRepository} from "../repositories/users/users-query-repository";
 import {commentsQueryRepository} from "../repositories/comments/comments-query-repository";
 import {UpdateCommentModel} from "../models/comments/UpdateCommentModel";
+import {ViewCommentModel} from "../models/comments/ViewCommentModel";
 
 
 export const commentService = {
@@ -33,6 +34,11 @@ export const commentService = {
     },
 
     async updateComment(updateCommentData: UpdateCommentModel, commentId: string): Promise<boolean> {
+
+        const comment: ViewCommentModel | null = await commentsQueryRepository.getCommentById(commentId)
+
+        if(!comment) return false
+
         return await commentsRepository.updateComment(updateCommentData, commentId)
 
 
@@ -40,6 +46,11 @@ export const commentService = {
 
 
     async deleteComment(commentId: string): Promise<boolean> {
+
+        const comment: ViewCommentModel | null = await commentsQueryRepository.getCommentById(commentId)
+
+        if(!comment) return false
+
         return await commentsRepository.deleteComment(commentId)
     }
 
