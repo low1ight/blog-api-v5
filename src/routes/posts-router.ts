@@ -20,7 +20,6 @@ import {ViewPostModelWithPagination} from "../models/posts/ViewPostModelWithPagi
 import {getPostQuery} from "./common-functions/getPostQuery";
 import {PostQueryType} from "../models/posts/query/PostQueryType";
 import {PostInputQueryType} from "../models/posts/query/PostInputQueryType";
-import {PostIdUriParamsModel} from "../models/posts/PostIdUriParamsModel";
 import {ViewCommentModelWithPagination} from "../models/comments/ViewCommentModelWithPagination";
 import {CommentInputQueryType} from "../models/comments/query/CommentInputQueryType";
 import {CommentQueryType} from "../models/comments/query/CommentQueryType";
@@ -94,20 +93,24 @@ postsRouter.delete('/:id',basicAuthorization,idValidatorMiddleware,inputValidati
 })
 
 
-postsRouter.get('/:postId/comments', async (req:RequestWithParamsAndQuery<PostIdUriParamsModel,CommentInputQueryType>,res:Response) => {
+postsRouter.get('/:id/comments',idValidatorMiddleware,inputValidationMiddleware, async (req:RequestWithParamsAndQuery<UriIdParamsModel,CommentInputQueryType>,res:Response) => {
 
     const query:CommentQueryType = getCommentQuery(req.query)
 
-    const comments:ViewCommentModelWithPagination | null = await commentsQueryRepository.getPostsComments(query,req.params.postId)
+    const post: ViewPostModel | null = await postsQueryRepository.getPostById(req.params.id)
+
+    if(!post) return res.sendStatus(404)
+
+    const comments:ViewCommentModelWithPagination | null = await commentsQueryRepository.getPostsComments(query,req.params.id)
 
     if(!comments) return res.sendStatus(404)
 
     return res.json(comments)
 })
 
-postsRouter.post('/:postId/comments',bearerAuthorization,commentValidator,idValidatorMiddleware, async (req:RequestWithParamsAndBody<PostIdUriParamsModel,CreateCommentModel>,res:Response) => {
+postsRouter.post('/:id/comments',bearerAuthorization,commentValidator,idValidatorMiddleware,inputValidationMiddleware, async (req:RequestWithParamsAndBody<UriIdParamsModel,CreateCommentModel>,res:Response) => {
 
-    const comments:ViewCommentModel | null = await commentService.createCommentForPost(req.body,req.params.postId,req.userId)
+    const comments:ViewCommentModel | null = await commentService.createCommentForPost(req.body,req.params.id,req.userId)
 
     if(!comments) return res.sendStatus(404)
 

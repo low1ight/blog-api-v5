@@ -11,9 +11,14 @@ export const bearerAuthorization = async (req:Request,res:Response,next:NextFunc
 
     if(authType && token && authType === 'Bearer') {
 
-        req.userId  = await jwtService.getUserIdByJwt(token)
+        const result  = await jwtService.getUserIdByJwt(token)
 
-        return next()
+        if(result) {
+            req.userId = result
+
+            return next()
+        }
+
 
 
     }
