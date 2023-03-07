@@ -7,7 +7,10 @@ export const jwtService = {
 
     async createJwt(userId:string) {
 
-        return jwt.sign({userId}, settings.JWT_SECRET, { expiresIn: '1h' });
+        const jwtToken = jwt.sign({userId}, settings.JWT_SECRET, { expiresIn: '1h' });
+
+        return { accessToken:jwtToken }
+
 
     },
 
@@ -15,7 +18,7 @@ export const jwtService = {
         try {
             const result:any = jwt.verify(token,settings.JWT_SECRET)
 
-            return {accessToken:result.userId}
+            return result.userId
         }
         catch {
             return null
