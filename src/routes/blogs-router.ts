@@ -11,7 +11,7 @@ import {UriIdParamsModel} from "../models/UriIdParamsModel";
 import {UpdateBlogModel} from "../models/blogs/UpdateBlogModel";
 import {BlogsValidationMiddleware} from "../middlewares/validators/blogs-validation-middleware";
 import {inputValidationMiddleware} from "../middlewares/validators/input-validation-middleware";
-import {authorizationMiddleware} from "../middlewares/authorization-middleware";
+import {basicAuthorization} from "../middlewares/basic-authorization";
 import {idValidatorMiddleware} from "../middlewares/validators/id-validator-middleware";
 import {ViewBlogModel} from "../models/blogs/ViewBlogModel";
 import {blogsService} from "../domain/blog-service";
@@ -58,7 +58,7 @@ blogsRouter.get('/:id',idValidatorMiddleware,inputValidationMiddleware, async (r
 
 
 
-blogsRouter.post('/', authorizationMiddleware,BlogsValidationMiddleware,inputValidationMiddleware,async (req:RequestWithBody<CreateBlogModel>, res:Response) => {
+blogsRouter.post('/', basicAuthorization,BlogsValidationMiddleware,inputValidationMiddleware,async (req:RequestWithBody<CreateBlogModel>, res:Response) => {
 
     const createdBlogId:string | null = await blogsService.createBlog(req.body)
 
@@ -84,7 +84,7 @@ blogsRouter.get('/:id/posts',idValidatorMiddleware,inputValidationMiddleware,asy
 })
 
 
-blogsRouter.post('/:id/posts', authorizationMiddleware,idValidatorMiddleware,postForBlogValidationMiddleware,inputValidationMiddleware,async (req:RequestWithParamsAndBody<UriIdParamsModel,CreatePostModel>, res:Response) => {
+blogsRouter.post('/:id/posts', basicAuthorization,idValidatorMiddleware,postForBlogValidationMiddleware,inputValidationMiddleware,async (req:RequestWithParamsAndBody<UriIdParamsModel,CreatePostModel>, res:Response) => {
 
 
     const createdPostId:string | null = await postService.createPost({...req.body,blogId:req.params.id})
@@ -100,7 +100,7 @@ blogsRouter.post('/:id/posts', authorizationMiddleware,idValidatorMiddleware,pos
 
 
 
-blogsRouter.put('/:id',authorizationMiddleware,idValidatorMiddleware,BlogsValidationMiddleware,inputValidationMiddleware, async (req:RequestWithParamsAndBody<UriIdParamsModel,UpdateBlogModel>, res:Response) => {
+blogsRouter.put('/:id',basicAuthorization,idValidatorMiddleware,BlogsValidationMiddleware,inputValidationMiddleware, async (req:RequestWithParamsAndBody<UriIdParamsModel,UpdateBlogModel>, res:Response) => {
 
     const isBlogUpdated:boolean = await blogsService.updateBlog(req.params.id,req.body)
 
@@ -113,7 +113,7 @@ blogsRouter.put('/:id',authorizationMiddleware,idValidatorMiddleware,BlogsValida
 
 
 
-blogsRouter.delete('/:id',authorizationMiddleware,idValidatorMiddleware,inputValidationMiddleware, async (req:RequestWithParams<UriIdParamsModel>, res:Response) => {
+blogsRouter.delete('/:id',basicAuthorization,idValidatorMiddleware,inputValidationMiddleware, async (req:RequestWithParams<UriIdParamsModel>, res:Response) => {
 
     const isBlogDeleted:boolean = await blogsService.deleteBlog(req.params.id)
 

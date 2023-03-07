@@ -1,5 +1,5 @@
 import {Router, Response} from "express";
-import {authorizationMiddleware} from "../middlewares/authorization-middleware";
+import {basicAuthorization} from "../middlewares/basic-authorization";
 import {RequestWithBody, RequestWithParams, RequestWithQuery} from "../request-types";
 import {UriIdParamsModel} from "../models/UriIdParamsModel";
 import {usersValidationMiddleware} from "../middlewares/validators/users-validation-middleware";
@@ -15,7 +15,7 @@ import {CreateUserModel} from "../models/users/CreateUserModel";
 export const usersRouter = Router({})
 
 
-usersRouter.get('/', authorizationMiddleware, async (req: RequestWithQuery<UserInputQueryType>, res: Response) => {
+usersRouter.get('/', basicAuthorization, async (req: RequestWithQuery<UserInputQueryType>, res: Response) => {
 
     const query = getUserQuery(req.query)
 
@@ -25,7 +25,7 @@ usersRouter.get('/', authorizationMiddleware, async (req: RequestWithQuery<UserI
 })
 
 
-usersRouter.post('/', authorizationMiddleware, usersValidationMiddleware, inputValidationMiddleware, async (req: RequestWithBody<CreateUserModel>, res: Response) => {
+usersRouter.post('/', basicAuthorization, usersValidationMiddleware, inputValidationMiddleware, async (req: RequestWithBody<CreateUserModel>, res: Response) => {
 
     const createdUser = await userService.createUser(req.body)
 
@@ -36,7 +36,7 @@ usersRouter.post('/', authorizationMiddleware, usersValidationMiddleware, inputV
 })
 
 
-usersRouter.delete('/:id', authorizationMiddleware, async (req: RequestWithParams<UriIdParamsModel>, res: Response) => {
+usersRouter.delete('/:id', basicAuthorization, async (req: RequestWithParams<UriIdParamsModel>, res: Response) => {
 
     const createdUser = await userService.deleteUser(req.params.id)
 

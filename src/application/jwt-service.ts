@@ -1,6 +1,5 @@
 import jwt from 'jsonwebtoken'
 import {settings} from "../settings";
-import {ObjectId} from "mongodb";
 
 
 export const jwtService = {
@@ -15,8 +14,6 @@ export const jwtService = {
     async getUserIdByJwt(token:string) {
         try {
             const result:any = jwt.verify(token,settings.JWT_SECRET)
-            //temp
-            new ObjectId(result)
 
             return result.userId
         }

@@ -4,7 +4,7 @@ import {ViewPostModel} from "../../models/posts/ViewPostModel";
 import {arrToPostViewModel} from "../../mappers/posts-mappers/arrToPostViewModel";
 import {PostType} from "../../models/posts/PostType";
 import {objToPostViewModel} from "../../mappers/posts-mappers/objToPostViewModel";
-import {getPaginatedAndSortedResults} from "../common-functions/getPaginatedAndSortedResults";
+import {getPaginatedAndSortedResults} from "../_common-functions/getPaginatedAndSortedResults";
 import {ViewPostModelWithPagination} from "../../models/posts/ViewPostModelWithPagination";
 import {PostQueryType} from "../../models/posts/query/PostQueryType";
 

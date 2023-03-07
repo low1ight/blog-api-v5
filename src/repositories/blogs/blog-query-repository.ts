@@ -5,7 +5,7 @@ import {objToBlogViewModel} from "../../mappers/blogs-mappers/objToBlogViewModel
 import {arrToBlogViewModel} from "../../mappers/blogs-mappers/arrToBlogViewModel";
 import {ObjectId} from "mongodb";
 import {ViewBlogModelWithPagination} from "../../models/blogs/ViewBlogModelWithPagination";
-import {getPaginatedAndSortedResults} from "../common-functions/getPaginatedAndSortedResults";
+import {getPaginatedAndSortedResults} from "../_common-functions/getPaginatedAndSortedResults";
 import {BlogQueryType} from "../../models/blogs/query/BlogQueryType";
 
 

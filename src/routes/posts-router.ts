@@ -11,7 +11,7 @@ import {CreatePostModel} from "../models/posts/CreatePostModel";
 import {UpdatePostModel} from "../models/posts/UpdatePostModel";
 import {PostsValidationMiddleware} from "../middlewares/validators/posts-validation-middleware";
 import {inputValidationMiddleware} from "../middlewares/validators/input-validation-middleware";
-import {authorizationMiddleware} from "../middlewares/authorization-middleware";
+import {basicAuthorization} from "../middlewares/basic-authorization";
 import {idValidatorMiddleware} from "../middlewares/validators/id-validator-middleware";
 import {ViewPostModel} from "../models/posts/ViewPostModel";
 import {postsQueryRepository} from "../repositories/posts/posts-query-repository";
@@ -25,7 +25,12 @@ import {ViewCommentModelWithPagination} from "../models/comments/ViewCommentMode
 import {CommentInputQueryType} from "../models/comments/query/CommentInputQueryType";
 import {CommentQueryType} from "../models/comments/query/CommentQueryType";
 import {getCommentQuery} from "./common-functions/getCommentQuery";
-import {commentsQueryRepository} from "../repositories/comments-query-repository";
+import {commentsQueryRepository} from "../repositories/comments/comments-query-repository";
+import {CreateCommentModel} from "../models/comments/CreateCommentModel";
+import {bearerAuthorization} from "../middlewares/bearer-authorization";
+import {commentService} from "../domain/comment-service";
+import {ViewCommentModel} from "../models/comments/ViewCommentModel";
+import {commentValidator} from "../middlewares/validators/comment-validator";
 
 
 
@@ -55,7 +60,7 @@ postsRouter.get('/:id',idValidatorMiddleware,inputValidationMiddleware, async (r
 
 
 
-postsRouter.post('/', authorizationMiddleware, PostsValidationMiddleware, inputValidationMiddleware,async (req:RequestWithBody<CreatePostModel>, res:Response) => {
+postsRouter.post('/', basicAuthorization, PostsValidationMiddleware, inputValidationMiddleware,async (req:RequestWithBody<CreatePostModel>, res:Response) => {
 
     const createdPostId:string | null = await postService.createPost(req.body)
     //wrong status
@@ -68,7 +73,7 @@ postsRouter.post('/', authorizationMiddleware, PostsValidationMiddleware, inputV
 })
 
 
-postsRouter.put('/:id',authorizationMiddleware,idValidatorMiddleware,PostsValidationMiddleware,inputValidationMiddleware,async (req:RequestWithParamsAndBody<UriIdParamsModel,UpdatePostModel>, res:Response) => {
+postsRouter.put('/:id',basicAuthorization,idValidatorMiddleware,PostsValidationMiddleware,inputValidationMiddleware,async (req:RequestWithParamsAndBody<UriIdParamsModel,UpdatePostModel>, res:Response) => {
 
     const isPostUpdated:boolean = await postService.updatePost(req.params.id,req.body)
 
@@ -78,7 +83,7 @@ postsRouter.put('/:id',authorizationMiddleware,idValidatorMiddleware,PostsValida
 
 })
 
-postsRouter.delete('/:id',authorizationMiddleware,idValidatorMiddleware,inputValidationMiddleware,async (req:RequestWithParams<UriIdParamsModel>, res:Response) => {
+postsRouter.delete('/:id',basicAuthorization,idValidatorMiddleware,inputValidationMiddleware,async (req:RequestWithParams<UriIdParamsModel>, res:Response) => {
 
     const isPostDeleted:boolean = await postService.deletePost(req.params.id)
 
@@ -94,6 +99,15 @@ postsRouter.get('/:postId/comments', async (req:RequestWithParamsAndQuery<PostId
     const query:CommentQueryType = getCommentQuery(req.query)
 
     const comments:ViewCommentModelWithPagination | null = await commentsQueryRepository.getPostsComments(query,req.params.postId)
+
+    if(!comments) return res.sendStatus(404)
+
+    return res.json(comments)
+})
+
+postsRouter.post('/:postId/comments',bearerAuthorization,commentValidator,idValidatorMiddleware, async (req:RequestWithParamsAndBody<PostIdUriParamsModel,CreateCommentModel>,res:Response) => {
+
+    const comments:ViewCommentModel | null = await commentService.createCommentForPost(req.body,req.params.postId,req.userId)
 
     if(!comments) return res.sendStatus(404)
 

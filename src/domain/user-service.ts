@@ -10,13 +10,13 @@ import {UserType} from "../models/users/UserType";
 export const userService = {
 
 
-    async createUser(newUserData:CreateUserModel):Promise<ViewUserModel | boolean> {
+    async createUser(newUserData:CreateUserModel):Promise<ViewUserModel | null> {
 
         const hashedPassword = await bcrypt.hash(newUserData.password,10)
 
         const newUser:string | null = await usersRepository.createUser({...newUserData,password:hashedPassword})
 
-        if(!newUser) return false
+        if(!newUser) return null
 
         return await usersQueryRepository.getUserById(newUser)
 
@@ -32,13 +32,17 @@ export const userService = {
 
     },
 
-    async checkCredentials(EmailOrLogin:string,password:string):Promise<boolean> {
+    async checkCredentials(EmailOrLogin:string,password:string):Promise<null | UserType> {
 
          const foundUser:null | UserType = await usersQueryRepository.findUserByEmailOrLogin(EmailOrLogin)
 
-            if(!foundUser) return false
+         if(!foundUser) return null
 
-          return await bcrypt.compare(password,foundUser.password)
+         const isLoginSuccessful = await bcrypt.compare(password,foundUser.password)
+
+        if(!isLoginSuccessful) return null
+
+        return foundUser
 
 
     },

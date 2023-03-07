@@ -11,7 +11,7 @@ import {objToCommentViewModel} from "../../mappers/comments-mappers/objToComment
 export const commentsQueryRepository = {
 
     async getPostsComments(query:CommentQueryType,postId:string):Promise<ViewCommentModelWithPagination> {
-        return await getPaginatedAndSortedResults(query,commentsCollection,arrToCommentViewModel,{_id:new ObjectId(postId)})
+        return await getPaginatedAndSortedResults(query,commentsCollection,arrToCommentViewModel,{postId:new ObjectId(postId)})
     },
 
     async getCommentById(id:string) {
