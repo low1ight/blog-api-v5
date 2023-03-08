@@ -7,7 +7,7 @@
     "watch": "tsc -w",
     "dev": "nodemon --inspect dist/index.js",
     "runDB": "cd C:\\mongodb\\bin & .\\mongod.exe --dbpath ..\\data\\db\\",
-    "test": "jest"
+    "test": "jest --runInBand --forceExit --coverage"
   },
   "dependencies": {
     "@types/bcrypt": "^5.0.0",
